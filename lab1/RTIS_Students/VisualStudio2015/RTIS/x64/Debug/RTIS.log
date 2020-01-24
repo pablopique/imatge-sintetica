@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\users\u114185\desktop\imatge-sintetica\lab1\rtis_students\src\main.cpp(174): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\u114185\desktop\imatge-sintetica\lab1\rtis_students\src\main.cpp(269): warning C4018: '<': signed/unsigned mismatch
+c:\users\u114185\desktop\imatge-sintetica\lab1\rtis_students\src\main.cpp(283): warning C4018: '<': signed/unsigned mismatch
+  RTIS.vcxproj -> C:\Users\U114185\Desktop\imatge-sintetica\lab1\RTIS_Students\VisualStudio2015\x64\Debug\RTIS.exe
