@@ -1,3 +1,2 @@
 ﻿  main.cpp
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl DepthShader::DepthShader(struct Vector3D,double,struct Vector3D)" (??0DepthShader@@QEAA@UVector3D@@N0@Z) referenced in function main
-C:\Users\u124268\Desktop\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe : fatal error LNK1120: 1 unresolved externals
+  RTIS_V2.vcxproj -> C:\Users\U124268\Desktop\imatge-sintetica\lab2\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe

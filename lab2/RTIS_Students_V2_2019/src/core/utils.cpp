@@ -18,7 +18,6 @@ bool Utils::hasIntersection(const Ray &ray, const std::vector<Shape*> &objectsLi
     // For each object on the scene...
 	for (size_t objIndex = 0; objIndex < objectsList.size(); objIndex++)
 	{
-		// Get the current object
 		const Shape *obj = objectsList.at(objIndex);
 		if (obj->rayIntersectP(ray)) {
 			return true;
@@ -30,18 +29,17 @@ bool Utils::hasIntersection(const Ray &ray, const std::vector<Shape*> &objectsLi
 
 bool Utils::getClosestIntersection(const Ray &cameraRay, const std::vector<Shape*> &objectsList, Intersection &its)
 {
-    std::cout << "Need to implement the function Utils::getClosestIntersection() in the file utils.cpp" << std::endl;
-	Intersection closestIntersection;
+	bool hasIntersection = false;
 	for (size_t objIndex = 0; objIndex < objectsList.size(); objIndex++)
 	{
-		// Get the current object
 		const Shape *obj = objectsList.at(objIndex);
-		obj->rayIntersect(cameraRay, its);
-		std::cout << "Object intersection " + objIndex << std::endl;
-		std::cout << its.itsPoint << std::endl;
+		if (obj->rayIntersect(cameraRay,its)) {
+			hasIntersection = true;
+		};
 	}
 
-    return false;
+	return hasIntersection;
+	;
 }
 
 double interpolate(double val, double y0, double x0, double y1, double x1 )
