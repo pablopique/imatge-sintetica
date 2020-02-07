@@ -15,7 +15,6 @@ Vector3D Utils::multiplyPerCanal(const Vector3D &v1, const Vector3D &v2)
 
 bool Utils::hasIntersection(const Ray &ray, const std::vector<Shape*> &objectsList)
 {
-    // For each object on the scene...
 	for (size_t objIndex = 0; objIndex < objectsList.size(); objIndex++)
 	{
 		const Shape *obj = objectsList.at(objIndex);

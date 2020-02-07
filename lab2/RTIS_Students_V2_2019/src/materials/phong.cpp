@@ -28,8 +28,8 @@ Vector3D Phong::getReflectance(const Vector3D & n, const Vector3D & wo, const Ve
 
 	Vector3D wr = n * 2 * (dot(n, wi)) - wi;
 
-	diffuse = kd * dot(wi.normalized(), n.normalized());
-	specular = ks * (pow(dot(wo.normalized(), wr.normalized()), nShininess));
+	diffuse = kd * dot(wi, n);
+	specular = ks * (pow(dot(wo, wr), nShininess));
 
 	return diffuse + specular;
 }

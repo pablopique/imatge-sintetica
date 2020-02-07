@@ -15,6 +15,7 @@
 
 #include "shaders/intersectionshader.h"
 #include "shaders/depthshader.h"
+#include "shaders/directshader.h"
 
 #include "materials/phong.h"
 
@@ -67,17 +68,14 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     objectsList->push_back(s2);
     objectsList->push_back(s3);
 
-
+	
     /* ****** */
     /* Lights */
     /* ****** */
-    //
-    // ADD YOUR LIGHT SOURCES HERE
-    // (...)
-    //
-    // DO NOT FORGET TO STORE THE LIGHT SOURCES IN THE "lightSourceList"
-    // (...)
-    //
+	lightSourceList = new std::vector<PointLightSource>;
+
+	PointLightSource p1(Vector3D(1, 0, 0), Vector3D(10, 10, 10));
+	lightSourceList->push_back(p1);
 }
 
 void raytrace(Camera* &cam, Shader* &shader, Film* &film,
@@ -132,7 +130,8 @@ int main()
 
 
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
-	Shader *shader = new DepthShader (Vector3D(0.4, 1, 0.4),8,bgColor);
+	//Shader *shader = new DepthShader (Vector3D(0.4, 1, 0.4),8,bgColor);
+	Shader *shader = new DirectShader(8, bgColor);
 
     // Declare pointers to all the variables which describe the scene
     Camera *cam;
