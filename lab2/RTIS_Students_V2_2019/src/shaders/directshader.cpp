@@ -21,7 +21,11 @@ Vector3D DirectShader::computeColor(const Ray &r, const std::vector<Shape*> &obj
 				Ray shadowRay(point,wi);
 				shadowRay.maxT = d;
 				if (!Utils::hasIntersection(shadowRay, objList)) {
-					finalColor += Utils::multiplyPerCanal(lsList[ls].getIntensity(point), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo, wi));
+					if (closestIntersection.shape->getMaterial().hasTransmission()) {
+						finalColor += Utils::multiplyPerCanal(lsList[ls].getIntensity(point), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo, wi));
+					}else if (closestIntersection.shape->getMaterial().hasDiffuseOrGlossy()) {
+						finalColor += Utils::multiplyPerCanal(lsList[ls].getIntensity(point), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo, wi));
+					}
 				}
 
 			}
