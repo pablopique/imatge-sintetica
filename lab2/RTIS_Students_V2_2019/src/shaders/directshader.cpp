@@ -14,13 +14,13 @@ Vector3D DirectShader::computeColor(const Ray &r, const std::vector<Shape*> &obj
 		Vector3D finalColor;
 		Vector3D wo = -r.d;
 		if (closestIntersection.shape->getMaterial().hasTransmission()) {
-
 			Vector3D normalRefraction = closestIntersection.normal.normalized();
-			double cosThetaT_out, cosThetaI = dot(normalRefraction, -r.d.normalized());
+			double cosThetaT_out;
+			double cosThetaI = dot(normalRefraction, -r.d);
 			double eta = closestIntersection.shape->getMaterial().getIndexOfRefraction();
 			if (cosThetaI < 0){
 				normalRefraction = -normalRefraction;
-				cosThetaI = dot(normalRefraction, -r.d.normalized());
+				cosThetaI = dot(normalRefraction, -r.d);
 				eta = 1 / eta;
 			}
 			if (!Utils::isTotalInternalReflection(eta, cosThetaI, cosThetaT_out)){
