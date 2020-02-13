@@ -13,6 +13,7 @@ public:
 	bool hasTransmission() const override;
 	bool hasDiffuseOrGlossy() const override;
 	Vector3D Transmissive::getReflectance(const Vector3D & n, const Vector3D & wo, const Vector3D & wi) const override;
+	double Transmissive::getIndexOfRefraction() const override;
 
 private:
 	Vector3D v;

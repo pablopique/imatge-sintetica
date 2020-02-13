@@ -24,3 +24,8 @@ bool Transmissive::hasDiffuseOrGlossy() const
 Vector3D Transmissive::getReflectance(const Vector3D & n, const Vector3D & wo, const Vector3D & wi) const {
 	return n * 2 * dot(wo, n) - wo;
 }
+
+double Transmissive::getIndexOfRefraction() const
+{
+	return medium;
+}

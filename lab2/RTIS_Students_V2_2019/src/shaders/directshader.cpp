@@ -13,6 +13,27 @@ Vector3D DirectShader::computeColor(const Ray &r, const std::vector<Shape*> &obj
 		point = closestIntersection.itsPoint;
 		Vector3D finalColor;
 		Vector3D wo = -r.d;
+		if (closestIntersection.shape->getMaterial().hasTransmission()) {
+
+			Vector3D normalRefraction = closestIntersection.normal.normalized();
+			double cosThetaT_out, cosThetaI = dot(normalRefraction, -r.d.normalized());
+			double eta = closestIntersection.shape->getMaterial().getIndexOfRefraction();
+			if (cosThetaI < 0){
+				normalRefraction = -normalRefraction;
+				cosThetaI = dot(normalRefraction, -r.d.normalized());
+				eta = 1 / eta;
+			}
+			if (!Utils::isTotalInternalReflection(eta, cosThetaI, cosThetaT_out)){
+				Vector3D wt = Utils::computeTransmissionDirection(r, normalRefraction, eta, cosThetaI, cosThetaT_out);
+				Ray refractRay = Ray(point, wt, r.depth + 1);
+				return computeColor(refractRay, objList, lsList);
+			}
+			else {
+				Vector3D wr = Utils::computeReflectionDirection(r.d, closestIntersection.normal.normalized());
+				Ray reflectionRay = Ray(point, wr.normalized(), r.depth + 1);
+				return computeColor(reflectionRay, objList, lsList);
+			}
+		}
 		if (closestIntersection.shape->getMaterial().hasSpecular()) {
 			Vector3D wr = Utils::computeReflectionDirection(r.d, closestIntersection.normal.normalized());
 			Ray reflectionRay = Ray(point, wr.normalized(), r.depth + 1);
