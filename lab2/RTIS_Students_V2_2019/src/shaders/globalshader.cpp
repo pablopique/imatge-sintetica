@@ -49,34 +49,35 @@ Vector3D GlobalShader::computeColor(const Ray &r, const std::vector<Shape*> &obj
 			}else if (r.depth == 0) {
 				int nSample = 50;
 				for (int i = 0; i < nSample; i++) {
-					Vector3D wj = Sampler.getSample(closestIntersection.normal);
+					Vector3D wj = Sampler.getSample(closestIntersection.normal.normalized());
 					Ray ray(point, wj.normalized(), r.depth + 1);
-					lIndir += Utils::multiplyPerCanal(computeColor(ray, objList, lsList), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo.normalized(), wj.normalized()));
+					Vector3D dirReflection = closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal.normalized(), wo.normalized(), wj.normalized());
+					lIndir += Utils::multiplyPerCanal(computeColor(ray, objList, lsList), dirReflection);
 				}
 				lIndir = lIndir / (2 * M_PI * nSample);
 			}
 			else {
-
-				Vector3D wn = Utils::computeReflectionDirection(wo, closestIntersection.normal);
-				Ray reflectionRay = Ray(point, wn, r.depth + 1);
-
-				lIndir += computeColor(rn, objList, lsList) + computeColor(reflectionRay, objList, lsList);
+				Ray normalRay = Ray(point, closestIntersection.normal.normalized(), r.depth + 1);
+				Vector3D wr = Utils::computeReflectionDirection(wo, closestIntersection.normal.normalized());
+				Ray reflectionRay = Ray(point, wr.normalized(), r.depth + 1);
+				normalRay.maxT = closestIntersection.normal.length();
+				reflectionRay.maxT = wr.length();
+				lIndir += (computeColor(normalRay, objList, lsList) + computeColor(reflectionRay, objList, lsList))/(4 * M_PI);
 			}
-			if (r.depth > 0) {
-				for (int ls = 0; ls < lsList.size(); ls++) {
-					Vector3D wi = lsList[ls].getPosition() - point;
-					double d = wi.length();
-					wi = wi.normalized();
-					if (dot(wi, closestIntersection.normal) >= 0) {
-						Ray shadowRay(point, wi);
-						shadowRay.maxT = d;
-						if (!Utils::hasIntersection(shadowRay, objList)) {
-							lDir += Utils::multiplyPerCanal(lsList[ls].getIntensity(point), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo, wi));
-						}
-
+			for (int ls = 0; ls < lsList.size(); ls++) {
+				Vector3D wi = lsList[ls].getPosition() - point;
+				double d = wi.length();
+				wi = wi.normalized();
+				if (dot(wi, closestIntersection.normal) >= 0) {
+					Ray shadowRay(point, wi);
+					shadowRay.maxT = d;
+					if (!Utils::hasIntersection(shadowRay, objList)) {
+						lDir += Utils::multiplyPerCanal(lsList[ls].getIntensity(point), closestIntersection.shape->getMaterial().getReflectance(closestIntersection.normal, wo, wi));
 					}
+
 				}
 			}
+			
 			
 			
 			
