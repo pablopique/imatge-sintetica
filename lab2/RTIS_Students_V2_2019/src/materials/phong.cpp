@@ -33,3 +33,7 @@ Vector3D Phong::getReflectance(const Vector3D & n, const Vector3D & wo, const Ve
 
 	return diffuse + specular;
 }
+
+Vector3D Phong::getDiffuseCoefficient() const {
+	return kd;
+}

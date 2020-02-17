@@ -12,3 +12,7 @@ double Material::getIndexOfRefraction() const
 
     return -1;
 }
+
+Vector3D Material::getDiffuseCoefficient() const {
+	return Vector3D(-1);
+}

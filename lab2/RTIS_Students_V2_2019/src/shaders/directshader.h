@@ -14,7 +14,7 @@ public:
 		const std::vector<PointLightSource> &lsList) const;
 
 private:
-	double maxDist; // Used to store the value of the maximum distance which can be visualized
+	double maxDist; 
 };
 
 #endif // DIRECTSHADER_H

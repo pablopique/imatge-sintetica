@@ -13,6 +13,8 @@ public:
 	bool hasTransmission() const override;
 	bool hasDiffuseOrGlossy() const override;
 	Vector3D Phong::getReflectance(const Vector3D & n, const Vector3D & wo, const Vector3D & wi) const override;
+	virtual Vector3D Phong::getDiffuseCoefficient() const override;
+
 
 private:
 	Vector3D ks;
